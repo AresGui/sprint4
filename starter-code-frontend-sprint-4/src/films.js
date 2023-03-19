@@ -84,9 +84,32 @@ function moviesAverageByCategory(movies, genre = "Crime") {
   return calculateAverage;
 }
 
+function conversion (duration) {
+  let timeArray = duration.split(" ");
+  let hours = parseInt(timeArray[0]);
+  let minutes = parseInt(timeArray[1]);
+  let totalMinutes = 0;
+
+  if (minutes == undefined) {
+    totalMinutes = parseInt(hours * 60);
+  } else {
+    totalMinutes = parseInt(hours * 60 + minutes);
+  }
+
+  //let totalMinutes = parseInt(hours * 60 + minutes);
+  return totalMinutes;
+}
 
 // Exercise 7: Modify the duration of movies to minutes
 function hoursToMinutes(movies) {
+  let newArray = [...movies];
+
+  newArray.forEach(movie => {
+    return movie.duration = conversion(movie.duration);
+  });
+
+  console.log("EXERCICE 7 ->", newArray);
+  return newArray;
 }
 
 // Exercise 8: Get the best film of a year
