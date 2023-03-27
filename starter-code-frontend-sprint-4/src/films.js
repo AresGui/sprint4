@@ -40,22 +40,24 @@ function moviesAverageOfDirector(movies, director) {
 
 // Exercise 4:  Alphabetic order by title 
 function orderAlphabetically(movies) {
-  let arrayCopy = [];
+  let arrayCopy = [...movies];
 
-  if (movies.length < 20) {
+  /*if (movies.length < 20) {
     arrayCopy = movies.map(movie => movie.title.toString());
   } else {
     arrayCopy = movies.slice(0, 21).map(movie => movie.title.toString());
-  }
+  }*/
   
   let sortedTitles = arrayCopy.sort(function (a, b) {
     if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
     if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
     return 0;
   });
+
+  let result = sortedTitles.slice(0, 21).map(movie => movie.title);
   
-  console.log("EXERCICE 4 ->", sortedTitles);
-  return sortedTitles;
+  console.log("EXERCICE 4 ->", result);
+  return result;
 }
 
 // Exercise 5: Order by year, ascending
@@ -76,8 +78,7 @@ function orderByYear(movies) {
 
 // Exercise 6: Calculate the average of the movies in a category 
 function moviesAverageByCategory(movies, genre = "Crime") {
-  let films = [...movies];
-  films.find(film => film.genre === genre);
+  let films = movies.filter(film => film.genre === genre);
 
   let calculateAverage = moviesAverageOfDirector(films, films.director);
   console.log("EXERCICE 6 ->", calculateAverage);
@@ -90,7 +91,7 @@ function conversion (duration) {
   let minutes = parseInt(timeArray[1]);
   let totalMinutes = 0;
 
-  if (minutes == undefined) {
+  if (minutes == undefined) { //si no existe la categoría minutos 
     totalMinutes = parseInt(hours * 60);
   } else {
     totalMinutes = parseInt(hours * 60 + minutes);
@@ -105,7 +106,7 @@ function hoursToMinutes(movies) {
   let newArray = [...movies];
 
   newArray.forEach(movie => {
-    return movie.duration = conversion(movie.duration);
+    movie.duration = conversion(movie.duration);
   });
 
   console.log("EXERCICE 7 ->", newArray);
@@ -113,8 +114,28 @@ function hoursToMinutes(movies) {
 }
 
 // Exercise 8: Get the best film of a year
-function bestFilmOfYear(year) {
+function bestFilmOfYear(movies, year) {
+  const filmsOfYear = movies.filter(movie => movie.year == year);
 
+  const bestMovie = filmsOfYear.reduce((acc, curr) => {
+    return Math.max(acc, curr.score);
+  }, 0)
+  
+  const result = filmsOfYear.filter(movie => movie.score.includes(bestMovie));
+
+
+  //const bestMovie = filmsOfYear.filter(movie => Math.max(movie.score));
+
+
+  /*
+  const newArray = [];
+  const bestMovie = filmsOfYear.find(movie => Math.max(movie.score));
+  newArray.push(bestMovie);*/
+
+  //const bestMovie = filmsOfYear.find(movie => Math.max(movie.score));
+
+  console.log("EXERCICE 8 ->", result);
+  return result;
 }
 
 
